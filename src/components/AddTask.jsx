@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import uuid from "react-uuid";
 
 function AddTask(props) {
   const [Text, setText] = useState("");
@@ -22,13 +23,71 @@ function AddTask(props) {
     }
   }
 
-  function handleSubmit() {}
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    if (!Text) {
+      alert("Please add a task");
+      return;
+    }
+    if (!Day) {
+      alert("Please add a Date");
+      return;
+    }
+
+    let months = {
+      0: "Jan",
+      1: "Feb",
+      2: "Mar",
+      3: "Apr",
+      4: "May",
+      5: "Jun",
+      6: "Jul",
+      7: "Aug",
+      8: "Sep",
+      9: "Oct",
+      10: "Nov",
+      11: "Dec",
+    };
+    let weekdays = {
+      0: "Sunday",
+      1: "Monday",
+      2: "Tuesday",
+      3: "Wednesday",
+      4: "Thursday",
+      5: "Friday",
+      6: "Saturday",
+    };
+
+    let day = new Date(Day);
+
+    let dayResult = `${
+      months[day.getMonth()]
+    }, ${day.getDate()}, ${day.getFullYear()}, ${
+      weekdays[day.getDay()]
+    } at ${day.getHours()}:${day.getMinutes()}`;
+
+    let id = uuid();
+
+    console.log(dayResult);
+
+    props.addTask({
+      id,
+      Text,
+      dayResult,
+      Reminder,
+    });
+
+    setText("");
+    setDay("");
+    setReminder(false);
+  }
 
   return (
     <form className="add-form" onSubmit={handleSubmit}>
       <div className="form-control">
         <label>
-          <strong>Task</strong>{" "}
+          <strong>Task</strong>
         </label>
         <input
           name="text"
@@ -44,7 +103,7 @@ function AddTask(props) {
         </label>
         <input
           name="day"
-          type="text"
+          type="datetime-local"
           placeholder="Add Day & Time"
           value={Day}
           onChange={handleChange}

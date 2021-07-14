@@ -9,16 +9,32 @@ function App() {
 
   function addTask(task) {
     setTasks((prevTasks) => {
-      return [task, ...prevTasks];
+      return [
+        {
+          id: task.id,
+          text: task.Text,
+          day: task.dayResult,
+          reminder: task.Reminder,
+        },
+        ...prevTasks,
+      ];
     });
   }
 
   function deleteTask(id) {
     setTasks((prevTasks) => {
       return prevTasks.filter((task, index) => {
-        return index !== id;
+        return task.id !== id;
       });
     });
+  }
+
+  function toggleReminder(id) {
+    setTasks(
+      totalTasks.map((task) => {
+        return task.id === id ? { ...task, reminder: !task.reminder } : task;
+      })
+    );
   }
 
   return (
@@ -29,7 +45,17 @@ function App() {
         titleColor="white"
         buttonColor="Green"
       />
-      <Todos deleteTask={deleteTask} totalTasks={totalTasks} />
+      {totalTasks.length ? (
+        <Todos
+          deleteTask={deleteTask}
+          totalTasks={totalTasks}
+          toggleReminder={toggleReminder}
+        />
+      ) : (
+        <strong>
+          <p style={{ textAlign: "center" }}>Nothing Here, Try Adding Some !</p>
+        </strong>
+      )}
       <Footer />
     </div>
   );
