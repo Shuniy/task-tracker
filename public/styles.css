@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap");
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,7 +5,6 @@
 }
 
 body {
-  font-family: "Poppins", sans-serif;
   background-color: #6f00ff;
 
   background-image: url("https://www.transparenttextures.com/patterns/diagmonds.png");
@@ -44,7 +41,6 @@ body {
   cursor: pointer;
   text-decoration: none;
   font-size: 15px;
-  font-family: inherit;
 }
 
 .btn:focus {
